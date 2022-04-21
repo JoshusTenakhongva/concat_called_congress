@@ -3,25 +3,27 @@ import requests, json, os
 def main(): 
     # Initialization
     propublica_key= os.getenv( 'propub_key' )
-    propub_params= {'X-API-key': propublica_key }
-    propub_base= 'https://api.propublica.org/congress/v1'
+    propub_header= { 'X-API-Key':propublica_key }
+    propub_params= { 'congress': 117, 'chamber': 'senate' }
+    propub_base= 'https://api.propublica.org/congress/v1/117/senate'
 
     regulations_key= os.getenv( 'reg_key' )
-    reg_params= {'X-Api-Key': regulations_key, 'Content-Type': 'application/vnd.api+json' }
+    reg_headers= {'X-Api-Key': regulations_key, 'Content-Type': 'application/vnd.api+json' }
+    reg_params= {}
     reg_base= 'https://api.regulations.gov/v4/documents'
 
     openfec_key= os.getenv( 'fec_key' )
-    fec_params= {'api_key': openfec_key }
+    fec_params= {'api_key': openfec_key, 'q': 'erik aadland' }
     fec_base= 'https://api.open.fec.gov/v1'
-    fec_query= '/candidates/search/erik aadland/'
+    fec_query= '/candidates/search/'
 
-    #propublica_r= requests.get( )
-    #regulations_r= requests.get() 
+    propublica_r= requests.get( propub_base, headers=propub_header, params=propub_params )
+    regulations_r= requests.get( reg_base, headers=reg_headers ) 
     openfec_r= requests.get( fec_base+fec_query, params=fec_params )
-    write_json( 'fec.json', openfec_r.json() ) 
 
-    # Construct API Request
-    #response = requests.get(state_url)
+    print( 'proPublica: ' + str(propublica_r.status_code) )
+    print( 'regulations: ' + str(regulations_r.status_code) )
+    print( 'open fec: ' + str(openfec_r.status_code) )
 
     # Save response
 
