@@ -3,7 +3,7 @@ from dotenv import dotenv_values
 
 def main(): 
     # Initialization
-    e_var= dotenv_values( '../.env' )
+    e_var= dotenv_values( '.env' )
 
     # Set up requests, headers, and parameters
     propublica_key= e_var[ 'propub_key' ]
