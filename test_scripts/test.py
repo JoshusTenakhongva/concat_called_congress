@@ -1,19 +1,22 @@
 import requests, json, os
+from dotenv import dotenv_values
 
 def main(): 
     # Initialization
+    e_var= dotenv_values( '../.env' )
+
     # Set up requests, headers, and parameters
-    propublica_key= os.getenv( 'propub_key' )
+    propublica_key= e_var[ 'propub_key' ]
     propub_header= { 'X-API-Key':propublica_key }
     propub_params= {}
     propub_base= 'https://api.propublica.org/congress/v1/117/nominees/confirmed.json'
 
-    regulations_key= os.getenv( 'reg_key' )
+    regulations_key= e_var[ 'reg_key' ]
     reg_headers= {'X-Api-Key':regulations_key, 'Content-Type':'application/vnd.api+json' }
     reg_params= {}
     reg_base= 'https://api.regulations.gov/v4/documents'
 
-    openfec_key= os.getenv( 'fec_key' )
+    openfec_key= e_var[ 'fec_key' ]
     fec_params= {'api_key':openfec_key, 'q':'erik aadland' }
     fec_base= 'https://api.open.fec.gov/v1'
     fec_query= '/candidates/search/'
