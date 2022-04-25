@@ -1,12 +1,14 @@
 import requests, json, os
 from dotenv import dotenv_values
 import db_access
+from flatten_json import flatten
 
 def main(): 
     # Initialization
     e_var= dotenv_values( '.env' )
 
-    
+    # Pull information from propublica 
+    propub_json = propub_pull( e_var )
 
     
 
@@ -21,7 +23,7 @@ def propub_pull( e_var ):
     propublica_key= e_var[ 'propub_key' ]
     propub_header= { 'X-API-Key':propublica_key }
     propub_params= {}
-    propub_base= 'https://api.propublica.org/congress/v1/117/nominees/confirmed.json'
+    propub_base= 'https://api.propublica.org/congress/v1/117/senate/members.json'
 
     # Send requests
     propublica_r= requests.get( propub_base, headers=propub_header, params=propub_params )
