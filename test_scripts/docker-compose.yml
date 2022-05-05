@@ -4,15 +4,17 @@ services:
     env_file: 
       - ./.env
     build: 
-      context: .
+      context: ${PWD}
+    volumes: 
+      - .:/usr/src/app
     ports: 
       - "8000:5000"
-  postgres: 
+  db: 
     image: postgres
-    restart: always
     container_name: postgres-0
-    user: postgres
     environment: 
-      - "POSTGRES_PASSWORD=postgres"
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: funky_noodle
+      POSTGRES_USER: root
     ports: 
       - "5432:5432"
